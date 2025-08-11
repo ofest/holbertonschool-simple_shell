@@ -3,7 +3,7 @@
 /**
  * main - Manage start.
  * @argc: Argument count.
- * @argv: Argument value>
+ * @argv: Argument value.
  *
  * Return: 0
  */
@@ -20,8 +20,10 @@ int main (void)
 	while(1)
 	{
 		printf("($) ");
+
 		/* Read command */
 		num_char = getline(&cmd, &size, stdin);
+
 		/* ctrl + d */
 		if (num_char == -1)
 		{
@@ -30,7 +32,19 @@ int main (void)
 		}
 		printf("Commande tapée : %s", cmd);
 
+		/* Cut cmd line */
 		token = strtok(cmd, " \n");
+
+		if (isatty(STDIN_FILENO))
+		{
+			printf("Mode interactif\n");
+			/*interactive();*/
+		}
+		else
+		{
+			printf("Mode non interactif\n");
+			/*n_interactive();*/
+		}
 
 		while (token)
 		{

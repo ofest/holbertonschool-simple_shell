@@ -5,7 +5,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
-/* Custom libraries */
+/* Custom files */
+#include "interactive.c"
+#include "n_interactive.c"
 
 #endif
