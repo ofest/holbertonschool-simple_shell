@@ -1,15 +1,15 @@
 #include "main.h"
 
 /**
- * main - Manage start.
- * @argc: Argument count.
- * @argv: Argument value.
+ * main - Main loop.
  *
  * Return: 0
  */
 
 int main (void)
 {
+	int argc = 0, i;
+	char *argv[100]; /* 100 is arbitrary -> have to manage it later */
 	/* Command line */
 	char *cmd = NULL, *token;
 	/* Buffer size */
@@ -28,25 +28,37 @@ int main (void)
 		if (num_char == -1)
 		{
 			printf("\n");
-			break;
+			free(cmd);
+			return (0);
 		}
-		printf("Commande tapée : %s", cmd);
+		printf("Commande tapée : %s", cmd); /* Debug */
 
-		/* Cut cmd line */
+		/* Split command line into words */
 		token = strtok(cmd, " \n");
+		while (token && argc < 99)
+		{
+			argv[argc++] = token;
+			token = strtok(NULL, " \n");
+		}
+		/* End list with NULL */
+		argv[argc] = NULL;
 
 		if (isatty(STDIN_FILENO))
 		{
-			printf("Mode interactif\n");
-			/*interactive();*/
+			printf("Mode interactif argc = %i\n", argc); /* Debug */
+			for (i = 0; i < argc; i++) /* Debug */
+			{
+				printf("argv[%d] = %s\n", i, argv[i]);
+			}
+			/*interactive(argc, argv);*/
 		}
 		else
 		{
-			printf("Mode non interactif\n");
-			/*n_interactive();*/
+			printf("Mode non interactif\n"); /* Debug */
+			/*n_interactive(argc, argv);*/
 		}
 
-		while (token)
+		while (token) /* Debug */
 		{
 			printf("Token : %s\n", token);
 			token = strtok(NULL, " \n");
