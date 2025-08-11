@@ -8,8 +8,8 @@
 
 int main (void)
 {
-	int argc = 0, i;
-	char *argv[100]; /* 100 is arbitrary -> have to manage it later */
+	int argc = 0, count, i;
+	char *tmp_cmd, **argv;
 	/* Command line */
 	char *cmd = NULL, *token;
 	/* Buffer size */
@@ -17,7 +17,7 @@ int main (void)
 	/* Char read */
 	ssize_t num_char;
 
-	while(1)
+	while (1)
 	{
 		printf("($) ");
 
@@ -33,35 +33,56 @@ int main (void)
 		}
 		printf("Commande tapée : %s", cmd); /* Debug */
 
-		/* Split command line into words */
+		tmp_cmd = strdup(cmd);
+
+		/* Count arg number */
+		token = strtok(tmp_cmd, " \n");
+		for (count = 0; token;)
+		{
+			count++;
+			token = strtok(NULL, " \n");
+		}
+		printf("Arg number : %i\n", count); /* Debug */
+		free(tmp_cmd);
+
+		/* Allocate space */
+		argv = malloc(sizeof(char *) * (count + 1));
+		if (!argv)
+		{
+			free(cmd);
+			return (0);
+		}
+
+		/* Fill argv */
+		argc = 0;
 		token = strtok(cmd, " \n");
-		while (token && argc < 99)
+		while (token)
 		{
 			argv[argc++] = token;
 			token = strtok(NULL, " \n");
 		}
-		/* End list with NULL */
 		argv[argc] = NULL;
 
+		/* Check if tty */
 		if (isatty(STDIN_FILENO))
 		{
-			printf("Mode interactif argc = %i\n", argc); /* Debug */
+			printf("Mode interactif\nargc = %i\n", argc); /* Debug */
 			for (i = 0; i < argc; i++) /* Debug */
-			{
-				printf("argv[%d] = %s\n", i, argv[i]);
-			}
-			/*interactive(argc, argv);*/
+			{ /* Debug */
+				printf("argv[%d] = %s\n", i, argv[i]); /* Debug */
+			} /* Debug */
+			interactive(argc, argv);
+			free(argv);
 		}
 		else
 		{
-			printf("Mode non interactif\n"); /* Debug */
+			printf("Mode non interactif\nargc = %i\n", argc); /* Debug */
+			for (i = 0; i < argc; i++) /* Debug */
+			{ /* Debug */
+				printf("argv[%d] = %s\n", i, argv[i]); /* Debug */
+			} /* Debug */
 			/*n_interactive(argc, argv);*/
-		}
-
-		while (token) /* Debug */
-		{
-			printf("Token : %s\n", token);
-			token = strtok(NULL, " \n");
+			free(argv);
 		}
 	}
 	free(cmd);
