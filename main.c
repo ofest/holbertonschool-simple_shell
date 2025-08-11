@@ -11,7 +11,7 @@
 int main (void)
 {
 	/* Command line */
-	char *cmd = NULL;
+	char *cmd = NULL, *token;
 	/* Buffer size */
 	size_t size = 0;
 	/* Char read */
@@ -29,6 +29,14 @@ int main (void)
 			break;
 		}
 		printf("Commande tapée : %s", cmd);
+
+		token = strtok(cmd, " \n");
+
+		while (token)
+		{
+			printf("Token : %s\n", token);
+			token = strtok(NULL, " \n");
+		}
 	}
 	free(cmd);
 	return (0);
