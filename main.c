@@ -16,10 +16,11 @@ int main (void)
 	size_t size = 0;
 	/* Char read */
 	ssize_t num_char;
+	char *prompt = "($) ";
 
 	while (1)
 	{
-		printf("($) ");
+		printf("%s", prompt);
 
 		/* Read command */
 		num_char = getline(&cmd, &size, stdin);
