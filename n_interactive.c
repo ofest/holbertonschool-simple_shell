@@ -1,5 +1,6 @@
-/* builtins.c */
-#include "main.h"
-
-/* Temporary empty implementation to avoid empty translation unit error */
-void dummy_builtins(void) {}
+void n_interactive(int argc, char **argv)
+{
+    execvp(argv[0], argv);
+    perror("Error executing command"); // Only executes if execvp fails
+    return (-1); // Or an appropriate exit stat 
+}
