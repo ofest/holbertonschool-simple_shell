@@ -17,14 +17,11 @@ int main(void)
 
 	while (1)
 	{
+		printf("Commande tapée : %s\n", cmd); /* Debug */
 		printf("%s", prompt);
 
 		/* Read command */
 		read_chars = getline(&cmd, &size, stdin);
-
-		/* Handle eof in a file */
-		if (handle_eof(read_chars, cmd))
-			return (0);
 
 		/* Count number of arguments */
 		count = arg_counter(cmd);
@@ -41,8 +38,11 @@ int main(void)
 
 		/* Fork pid */
 		fork_pid(argv);
-		free(argv);
 
+		/* Handle eof in a file */
+		if (handle_eof(read_chars, cmd, argv))
+			return (0);
+		free(argv);
 	}
 	free(cmd);
 	return (0);
