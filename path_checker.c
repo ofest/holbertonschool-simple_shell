@@ -1,23 +1,59 @@
 #include "main.h"
 
 /**
- * path_checker - Handle env paths.
- * @argv: Argument values.
+ * path_checker - Check if command exists in PATH.
+ * @command: Command to check.
  *
- * Return: Void.
+ * Return: Full path to command if found, NULL if not found.
  */
 
-void path_checker(char **argv)
+char *path_checker(char *cmd)
 {
-	int i;
+	char *path, *path_copy, *dir, *full_path;
 	struct stat st;
 
-	printf("Before stat\n");/* Debug */
-	for (i = 0; argv[i]; i++)
+	if (!cmd)
+		return (NULL);
+
+	/* If 'cmd' is a valid existing path to an executable, return it */
+	if (stat(cmd, &st) == 0 && (st.st_mode & S_IXUSR))
+		return (strdup(cmd));
+
+	/* Get PATH environment variable */
+	path = getenv("PATH");
+	if (!path)
+		return (NULL);
+
+	path_copy = strdup(path);
+	if (!path_copy)
+		return (NULL);
+
+	/* Search in each directory of PATH */
+	dir = strtok(path_copy, ":");
+	while (dir)
 	{
-		if (stat(argv[i], &st) == 0)
-			printf(" Found\n");/* Debug */
-		else
-			printf(" Not found\n");/* Debug */
+		/* Allocate space for full path */
+		full_path = malloc(strlen(dir) + strlen(cmd) + 2);
+		if (!full_path)
+		{
+			free(path_copy);
+			return (NULL);
+		}
+
+		/* Build full path */
+		sprintf(full_path, "%s/%s", dir, cmd);
+
+		/* Check if file exists and is executable */
+		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
+		{
+			free(path_copy);
+			return (full_path);
+		}
+
+		free(full_path);
+		dir = strtok(NULL, ":");
 	}
+
+	free(path_copy);
+	return (NULL);
 }
