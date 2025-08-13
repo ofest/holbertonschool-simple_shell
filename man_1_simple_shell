@@ -95,12 +95,6 @@ The following environment variables affect the behavior of
 .TP
 .B PATH
 Specifies the directories to search for commands.
-.TP
-.B HOME
-Specifies the default starting directory for the shell.
-.TP
-.B USER
-Current logged-in user.
 
 
 .SH \m[cyan]AUTHOR\m[white]
