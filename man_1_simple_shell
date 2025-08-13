@@ -1,0 +1,83 @@
+.\" Manpage for hsh (Holberton Simple Shell)
+.TH HSH 1 "Aout 2025" "1.0" "User Commands"
+
+
+.SH \m[cyan]NAME\m[white]
+hsh \- simple UNIX command interpreter
+
+
+.SH \m[cyan]SYNOPSIS\m[white]
+.B \m[yellow]hsh\m[white]
+.RI [ command ]
+.br
+.B \m[yellow]hsh\m[white]
+execute a command from the system.
+
+
+.SH \m[cyan]DESCRIPTION\m[white]
+The
+.B \m[yellow]hsh\m[white]
+program is a simple command-line interpreter.
+It mimics basic functionality of a UNIX shell.
+.PP
+It reads commands from the user or a file, parses them, and executes them by forking processes.
+The shell supports:
+.IP \[bu] 2
+Executing commands found in the system PATH
+.IP \[bu] 2
+Handling command arguments
+.IP \[bu] 2
+Simple built-in commands like
+.B \m[yellow]exit\m[white]
+and
+.B \m[yellow]env\m[white]
+.IP \[bu] 2
+Interactive mode and non-interactive mode
+
+
+.SH \m[cyan]OPTIONS\m[white]
+.TP
+.I input_file
+A text file containing commands to be executed, one per line.
+
+
+.SH \m[cyan]BUILTINS\m[white]
+The following built-in commands are supported:
+.TP
+.B \m[yellow]exit\m[white]
+Exit the shell.
+.TP
+.B \m[yellow]env\m[white]
+Print the current environment variables.
+
+
+.SH \m[cyan]EXAMPLES\m[white]
+.B \m[yellow]Run in interactive mode:\m[white]
+.PP
+.EX
+$ ./hsh
+($) ls -l
+($) exit
+.EE
+.PP
+.B \m[yellow]Run in non-interactive mode:\m[white]
+.PP
+.EX
+$ echo "ls -l" | ./hsh
+.EE
+
+
+.SH \m[cyan]SEE ALSO\m[white]
+.BR bash (1),
+
+
+.SH \m[cyan]COPYLEFT\m[white]
+This program is free software; you can redistribute it and/or modify it under the terms of
+the GNU General Public License (GPL) version 3, as published by the Free Software Foundation.
+.PP
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
+.PP
+You should have received a copy of the GNU General Public License along with this program;
+if not, see\m[purple]<http://www.gnu.org/licenses/>\m[white].
