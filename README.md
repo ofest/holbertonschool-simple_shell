@@ -25,15 +25,21 @@ It was developed as out fourth group project at Holberton School with the goal t
 
 2. **Compile the source files:**
    ```sh
-   gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+   gcc -Wall -Werror -Wextra -pedantic main.c -o hsh
    ```
    This will generate an executable named `hsh`.
 3. **Create an alias (optional)**
     You can create an alias to reach easier hsh.
+
     For a temporary alias (reset after reboot) :
-    `alias hsh=/<path to the directory>./hsh`
+    ```shell
+    alias hsh=/<path to the directory>./hsh
+    ```
+
     For a permanent alias you have to open your `~/bashrc` or `~/zshrc` file depending on what you're using, then, at the end of the file add :
-    `alias hsh=/<path to the directory>./hsh`
+    ```shell
+    alias hsh=/<path to the directory>./hsh
+    ```
 
 ## 💡 Usage
 1. **Interactive mode**
@@ -67,3 +73,6 @@ It was developed as out fourth group project at Holberton School with the goal t
 
 ## 📜 License
 This project is licensed under the GNU GPL v3.0. See the LICENSE.txt file for details.
+
+## <a href="https://www.holbertonschool.com" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 6px;"><img src="https://cdn.prod.website-files.com/6105315644a26f77912a1ada/611e13a82c74407dfebd313f_semi-logo-holberton-01.svg" alt="Holberton" width="24" height="24" style="vertical-align: middle;" /></a> Acknowledgments
+Made with love for [Holberton](https://www.holbertonschool.com/) bisous.
