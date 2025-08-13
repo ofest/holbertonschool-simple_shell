@@ -1,0 +1,69 @@
+# Simple shell
+## 📌 Description
+This project is a custom shell named hsh for Holberton shell.
+It was developed as out fourth group project at Holberton School with the goal to reinforce everything we saw for the C language, all within a peer programming environment.
+
+## 🚀 Getting Started
+### ✅ Prerequisites
+- GCC (version 13.3.0 or higher recommended)
+- Make (optional, for easier compilation)
+- Unix-like OS (tested on [![Arch Linux](https://img.shields.io/badge/Arch-1793D1?logo=arch-linux&logoColor=fff)](#), [![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?logo=ubuntu&logoColor=white)](#) and [![Windows](https://custom-icon-badges.demolab.com/badge/Windows-0078D6?logo=windows11&logoColor=white)](#)).
+
+### 🛠️ Technologies Used
+[![C](https://img.shields.io/badge/C-00599C?logo=c&logoColor=white)](#)
+[![GitHub](https://img.shields.io/badge/GitHub-%23121011.svg?logo=github&logoColor=white)](#)
+[![GCC](https://img.shields.io/badge/gcc-13.3.0-blue)](#)
+
+
+## 📥 Installation
+
+1. **Clone the repository:**
+   ```sh
+   git clone https://github.com/ofest/holbertonschool-simple_shell
+   cd holbertonschool-simple_shell
+   ```
+
+2. **Compile the source files:**
+   ```sh
+   gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+   ```
+   This will generate an executable named `hsh`.
+3. **Create an alias (optional)**
+    You can create an alias to reach easier hsh.
+    For a temporary alias (reset after reboot) :
+    `alias hsh=/<path to the directory>./hsh`
+    For a permanent alias you have to open your `~/bashrc` or `~/zshrc` file depending on what you're using, then, at the end of the file add :
+    `alias hsh=/<path to the directory>./hsh`
+
+## 💡 Usage
+1. **Interactive mode**
+    - You can use `./hsh` to enter interactive mode.
+    - You can exit hsh whit the shortcut `ctrl + d` or with the command `exit`.
+2. **Uninteractive mode**
+    You can pass commands through hsh like :
+    ```shell
+    echo "ls" | ./hsh
+    ```
+
+## 📁 Project Structure
+```txt
+.
+├── AUTHORS
+├── LICENSE
+├── README.md
+├── arg_counter.c
+├── arg_filler.c
+├── eof_handler.c
+├── fork_pid.c
+├── main.c
+├── main.h
+├── man_1_simple_shell
+└── path_checker.c
+```
+
+## 👥 Authors
+- [Franck S.](https://github.com/Franck-dev-hub)
+- [Daniel R.](https://github.com/ofest)
+
+## 📜 License
+This project is licensed under the GNU GPL v3.0. See the LICENSE.txt file for details.
