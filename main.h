@@ -14,5 +14,6 @@
 #include "eof_handler.c"
 #include "arg_counter.c"
 #include "arg_filler.c"
+#include "path_checker.c"
 
 #endif

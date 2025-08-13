@@ -8,7 +8,7 @@
 
 int main (void)
 {
-	int count, i;
+	int count;
 	char **argv;
 	/* Command line */
 	char *cmd = NULL;
@@ -21,8 +21,6 @@ int main (void)
 	/* pid / fork vars */
 	pid_t pid;
 	int status;
-	/* cmd exist */
-	struct stat st;
 
 	while (1)
 	{
@@ -45,17 +43,10 @@ int main (void)
 		if (!argv)
 		    return (0);
 
-		/* check if cmd exist */
-		printf("Before stat\n");
-		for (i = 0; argv[i]; i++)
-		{
-			if (stat(argv[i], &st) == 0)
-				printf(" Found\n");
-			else
-				printf(" Not found\n");
-		}	
+		/* Check if cmd exist */
+		path_checker(argv);
 
-		/* fork pour execute */
+		/* Fork pour execute */
 		pid = fork();
 		if (pid == -1)
 		{
