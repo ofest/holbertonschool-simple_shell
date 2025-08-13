@@ -45,7 +45,7 @@ It was developed as out fourth group project at Holberton School with the goal t
 1. **Interactive mode**
     - You can use `./hsh` to enter interactive mode.
     - You can exit hsh whit the shortcut `ctrl + d` or with the command `exit`.
-2. **Uninteractive mode**
+2. **Not interactive mode**
     You can pass commands through hsh like :
     ```shell
     echo "ls" | ./hsh
@@ -68,8 +68,8 @@ It was developed as out fourth group project at Holberton School with the goal t
 ```
 
 ## 👥 Authors
-- [Franck S.](https://github.com/Franck-dev-hub)
 - [Daniel R.](https://github.com/ofest)
+- [Franck S.](https://github.com/Franck-dev-hub)
 
 ## 📜 License
 This project is licensed under the GNU GPL v3.0. See the LICENSE.txt file for details.
