@@ -51,6 +51,18 @@ Exit the shell.
 Print the current environment variables.
 
 
+.SH \m[cyan]EXIT STATUS\m[white]
+The
+.B \m[yellow]hsh\m[white]
+command returns:
+.IP 0
+If the last executed command was successful.
+.IP non-zero
+If the last executed command failed.
+.IP 2
+If an internal shell error occurred.
+
+
 .SH \m[cyan]EXAMPLES\m[white]
 .B \m[yellow]Run in interactive mode:\m[white]
 .PP
@@ -65,6 +77,38 @@ $ ./hsh
 .EX
 $ echo "ls -l" | ./hsh
 .EE
+
+
+.SH \m[cyan]FILES\m[white]
+.TP
+.I AUTHORS
+List of individuals who contributed to the project.
+.TP
+.I /bin/*
+System binaries available to execute.
+.TP
+.I /usr/bin/*
+Additional system binaries available to execute.
+
+
+.SH \m[cyan]ENVIRONMENT\m[white]
+The following environment variables affect the behavior of
+.B \m[yellow]hsh\m[white]:
+.TP
+.B PATH
+Specifies the directories to search for commands.
+.TP
+.B HOME
+Specifies the default starting directory for the shell.
+.TP
+.B USER
+Current logged-in user.
+
+
+.SH \m[cyan]AUTHOR\m[white]
+See the
+.I AUTHORS
+file in the project root directory for the list of contributors.
 
 
 .SH \m[cyan]SEE ALSO\m[white]
