@@ -13,5 +13,6 @@
 /* Custom files */
 #include "eof_handler.c"
 #include "arg_counter.c"
+#include "arg_filler.c"
 
 #endif

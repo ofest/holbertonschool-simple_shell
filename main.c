@@ -8,10 +8,10 @@
 
 int main (void)
 {
-	int argc = 0, count, i;
+	int count, i;
 	char **argv;
 	/* Command line */
-	char *cmd = NULL, *token;
+	char *cmd = NULL;
 	/* Buffer size */
 	size_t size = 0;
 	/* Char read */
@@ -35,31 +35,20 @@ int main (void)
 		if (handle_eof(read_chars, cmd))
 		    return (0);
 
+		/* Count number of arguments */
 		count = arg_counter(cmd);
-
-		/* Allocate space */
-		argv = malloc(sizeof(char *) * (count + 1));
-		if (!argv)
-		{
-			free(cmd);
+		if (!count || count == 0)
 			return (0);
-		}
 
 		/* Fill argv */
-		argc = 0;
-		token = strtok(cmd, " \n");
-		while (token)
-		{
-			argv[argc++] = token;
-			token = strtok(NULL, " \n");
-		}
-		argv[argc] = NULL;
+		argv = arg_filler(count, cmd);
+		if (!argv)
+		    return (0);
 
 		/* check if cmd exist */
 		printf("Before stat\n");
 		for (i = 0; argv[i]; i++)
 		{
-			printf("ici\n");
 			if (stat(argv[i], &st) == 0)
 				printf(" Found\n");
 			else
