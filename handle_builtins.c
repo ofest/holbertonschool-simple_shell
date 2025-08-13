@@ -3,13 +3,13 @@
 /**
  * handle_builtins - Handle built-in commands.
  * @argv: Argument values.
+ * @env: Environnement variables.
  *
- * Return: 1 if built-in command was executed, 0 otherwise.
+ * Return: 0 on error, 1 if cmd executed, 2 for exit.
  */
 
-int handle_builtins(char **argv)
+int handle_builtins(char **argv, char **env)
 {
-	extern char **environ;
 	int i;
 
 	if (!argv || !argv[0])
@@ -24,9 +24,9 @@ int handle_builtins(char **argv)
 	}
 	else if (strcmp(argv[0], "env") == 0)
 	{
-		for (i = 0; environ[i]; i++)
+		for (i = 0; env[i]; i++)
 		{
-			printf("%s\n", environ[i]);
+			printf("%s\n", env[i]);
 		}
 		return (1);
 	}

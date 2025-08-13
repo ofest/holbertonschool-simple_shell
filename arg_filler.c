@@ -23,7 +23,6 @@ char **arg_filler(int count, char *cmd)
 		perror("malloc");
 		return (NULL);
 	}
-
 	/* Create a copy of cmd to avoid modifying original */
 	tmp_cmd = strdup(cmd);
 	if (!tmp_cmd)
@@ -34,7 +33,7 @@ char **arg_filler(int count, char *cmd)
 
 	/* Fill argv & argc */
 	token = strtok(tmp_cmd, " \n");
-	while (token && argc < count)
+	for (; token && argc < count; argc++)
 	{
 		argv[argc] = strdup(token);
 		if (!argv[argc])
@@ -46,11 +45,9 @@ char **arg_filler(int count, char *cmd)
 			free(tmp_cmd);
 			return (NULL);
 		}
-		argc++;
 		token = strtok(NULL, " \n");
 	}
 	argv[argc] = NULL;
 	free(tmp_cmd);
-
 	return (argv);
 }
