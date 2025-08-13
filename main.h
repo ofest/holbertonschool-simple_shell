@@ -12,5 +12,6 @@
 
 /* Custom files */
 #include "eof_handler.c"
+#include "arg_counter.c"
 
 #endif

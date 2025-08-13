@@ -9,7 +9,7 @@
 int main (void)
 {
 	int argc = 0, count, i;
-	char *tmp_cmd, **argv;
+	char **argv;
 	/* Command line */
 	char *cmd = NULL, *token;
 	/* Buffer size */
@@ -31,20 +31,11 @@ int main (void)
 		/* Read command */
 		read_chars = getline(&cmd, &size, stdin);
 
+		/* Handle eof in a file */
 		if (handle_eof(read_chars, cmd))
 		    return (0);
 
-		tmp_cmd = strdup(cmd);
-
-		/* Count arg number */
-		token = strtok(tmp_cmd, " \n");
-		for (count = 0; token;)
-		{
-			count++;
-			token = strtok(NULL, " \n");
-		}
-		printf("Arg number : %i\n", count); /* Debug */
-		free(tmp_cmd);
+		count = arg_counter(cmd);
 
 		/* Allocate space */
 		argv = malloc(sizeof(char *) * (count + 1));
