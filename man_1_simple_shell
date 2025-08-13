@@ -57,9 +57,7 @@ The
 command returns:
 .IP 0
 If the last executed command was successful.
-.IP non-zero
-If the last executed command failed.
-.IP 2
+.IP 1
 If an internal shell error occurred.
 
 

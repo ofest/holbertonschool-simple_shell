@@ -59,8 +59,8 @@ It was developed as out fourth group project at Holberton School with the goal t
 ├── README.md
 ├── arg_counter.c
 ├── arg_filler.c
-├── eof_handler.c
-├── fork_pid.c
+├── execute_command.c
+├── handle_builtins.c
 ├── main.c
 ├── main.h
 ├── man_1_simple_shell
