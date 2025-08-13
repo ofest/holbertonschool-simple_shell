@@ -8,33 +8,31 @@
 
 int main (void)
 {
-	int argc = 0, count;
+	int argc = 0, count, i;
 	char *tmp_cmd, **argv;
 	/* Command line */
 	char *cmd = NULL, *token;
 	/* Buffer size */
 	size_t size = 0;
 	/* Char read */
-	ssize_t num_char;
+	ssize_t read_chars;
+	/* Prompt sign */
 	char *prompt = "($) ";
+	/* pid / fork vars */
 	pid_t pid;
 	int status;
+	/* cmd exist */
+	struct stat st;
 
 	while (1)
 	{
 		printf("%s", prompt);
 
 		/* Read command */
-		num_char = getline(&cmd, &size, stdin);
+		read_chars = getline(&cmd, &size, stdin);
 
-		/* ctrl + d */
-		if (num_char == -1)
-		{
-			printf("\n");
-			free(cmd);
-			return (0);
-		}
-		printf("Commande tapée : %s", cmd); /* Debug */
+		if (handle_eof(read_chars, cmd))
+		    return (0);
 
 		tmp_cmd = strdup(cmd);
 
@@ -66,6 +64,18 @@ int main (void)
 		}
 		argv[argc] = NULL;
 
+		/* check if cmd exist */
+		printf("Before stat\n");
+		for (i = 0; argv[i]; i++)
+		{
+			printf("ici\n");
+			if (stat(argv[i], &st) == 0)
+				printf(" Found\n");
+			else
+				printf(" Not found\n");
+		}	
+
+		/* fork pour execute */
 		pid = fork();
 		if (pid == -1)
 		{

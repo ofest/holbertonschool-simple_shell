@@ -7,9 +7,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 /* Custom files */
-#include "interactive.c"
-#include "n_interactive.c"
+#include "eof_handler.c"
 
 #endif
