@@ -5,13 +5,16 @@
  * @count: number of arguments.
  * @cmd: Inputed commands.
  *
- * Return: argv
+ * Return: argv on success, NULL on failure.
  */
 
 char **arg_filler(int count, char *cmd)
 {
 	int argc = 0;
-	char **argv, *token;
+	char **argv, *token, *tmp_cmd;
+
+	if (!cmd || count <= 0)
+		return (NULL);
 
 	/* Allocate space */
 	argv = malloc(sizeof(char *) * (count + 1));
@@ -21,14 +24,33 @@ char **arg_filler(int count, char *cmd)
 		return (NULL);
 	}
 
-	/* Fill argv & argc */
-	token = strtok(cmd, " \n");
-	while (token)
+	/* Create a copy of cmd to avoid modifying original */
+	tmp_cmd = strdup(cmd);
+	if (!tmp_cmd)
 	{
-		argv[argc++] = token;
+		free(argv);
+		return (NULL);
+	}
+
+	/* Fill argv & argc */
+	token = strtok(tmp_cmd, " \n");
+	while (token && argc < count)
+	{
+		argv[argc] = strdup(token);
+		if (!argv[argc])
+		{
+			/* Clean up on error */
+			while (argc > 0)
+				free(argv[--argc]);
+			free(argv);
+			free(tmp_cmd);
+			return (NULL);
+		}
+		argc++;
 		token = strtok(NULL, " \n");
 	}
 	argv[argc] = NULL;
+	free(tmp_cmd);
 
 	return (argv);
 }

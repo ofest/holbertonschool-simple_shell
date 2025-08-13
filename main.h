@@ -11,10 +11,10 @@
 #include <sys/stat.h>
 
 /* Custom files */
-#include "eof_handler.c"
+#include "handle_builtins.c"
 #include "arg_counter.c"
 #include "arg_filler.c"
 #include "path_checker.c"
-#include "fork_pid.c"
+#include "execute_command.c"
 
 #endif
