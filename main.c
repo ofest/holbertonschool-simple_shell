@@ -15,12 +15,14 @@ int main(int argc, char **argv, char **envp)
 	char *cmd = NULL, *prompt = ("($) ");
 	size_t size = 0;
 	ssize_t read_chars;
+	int interactive = isatty(STDIN_FILENO);
 
 	(void)argc;
 
 	while (1)
 	{
-		printf("%s", prompt);
+		if (interactive)
+			printf("%s", prompt);
 		read_chars = getline(&cmd, &size, stdin);
 		if (read_chars == -1)
 		{
