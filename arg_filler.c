@@ -20,6 +20,7 @@ char **arg_filler(int count, char *cmd)
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
 	{
+		free(argv);
 		perror("malloc");
 		return (NULL);
 	}
