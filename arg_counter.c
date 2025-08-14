@@ -15,7 +15,7 @@ int arg_counter(char *cmd)
 	if (!cmd || strlen(cmd) == 0)
 		return (0);
 
-	tmp_cmd = strdup(cmd);
+	tmp_cmd = _strdup(cmd);
 	if (!tmp_cmd)
 		return (0);
 

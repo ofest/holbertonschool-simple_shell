@@ -16,12 +16,12 @@ char *path_checker(char *cmd)
 		return (NULL);
 	/* If 'cmd' is a valid existing path to an executable, return it */
 	if (stat(cmd, &st) == 0 && (st.st_mode & S_IXUSR))
-		return (strdup(cmd));
+		return (_strdup(cmd));
 	/* Get PATH environment variable */
 	path = getenv("PATH");
 	if (!path)
 		return (NULL);
-	path_copy = strdup(path);
+	path_copy = _strdup(path);
 	if (!path_copy)
 		return (NULL);
 	/* Search in each directory of PATH */

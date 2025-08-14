@@ -25,7 +25,7 @@ char **arg_filler(int count, char *cmd)
 		return (NULL);
 	}
 	/* Create a copy of cmd to avoid modifying original */
-	tmp_cmd = strdup(cmd);
+	tmp_cmd = _strdup(cmd);
 	if (!tmp_cmd)
 	{
 		free(argv);
@@ -36,7 +36,7 @@ char **arg_filler(int count, char *cmd)
 	token = strtok(tmp_cmd, " \n");
 	for (; token && argc < count; argc++)
 	{
-		argv[argc] = strdup(token);
+		argv[argc] = _strdup(token);
 		if (!argv[argc])
 		{
 			/* Clean up on error */

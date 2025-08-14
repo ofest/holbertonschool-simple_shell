@@ -16,5 +16,6 @@
 #include "arg_filler.c"
 #include "path_checker.c"
 #include "execute_command.c"
+#include "_strdup.c"
 
 #endif
