@@ -15,7 +15,7 @@ char *path_checker(char *cmd)
 	if (!cmd)
 		return (NULL);
 	/* If 'cmd' is a valid existing path to an executable, return it */
-	if (stat(cmd, &st) == 0 && (st.st_mode & S_IXUSR))
+	if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
 		return (_strdup(cmd));
 	/* Get PATH environment variable */
 	path = getenv("PATH");
@@ -38,7 +38,7 @@ char *path_checker(char *cmd)
 		/* Build full path */
 		sprintf(full_path, "%s/%s", dir, cmd);
 		/* Check if file exists and is executable */
-		if (stat(full_path, &st) == 0 && (st.st_mode & S_IXUSR))
+		if (stat(full_path, &st) == 0 && S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
 		{
 			free(path_copy);
 			return (full_path);

@@ -13,10 +13,7 @@ int handle_builtins(char **argv, char **env)
 	int i;
 
 	if (!argv || !argv[0])
-	{
-		free(argv);
 		return (0);
-	}
 
 	if (strcmp(argv[0], "exit") == 0)
 	{

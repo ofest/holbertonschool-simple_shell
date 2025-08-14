@@ -11,7 +11,7 @@
 
 int main(int argc, char **argv, char **envp)
 {
-	int count;
+	int count, builtin_result;
 	char *cmd = NULL, *prompt = ("($) ");
 	size_t size = 0;
 	ssize_t read_chars;
@@ -41,10 +41,18 @@ int main(int argc, char **argv, char **envp)
 		argv = arg_filler(count, cmd);
 		if (!argv)
 			continue;
-		if (handle_builtins(argv, envp) == 1)
+		builtin_result = handle_builtins(argv, envp);
+		if (builtin_result == 1)
+		{
+			free(argv);
 			continue;
-		else if (handle_builtins(argv, envp) == 2)
+		}
+		else if (builtin_result == 2)
+		{
+			free(argv);
+			free(cmd);
 			return (0);
+		}
 		if (execute_command(argv) == -1)
 			fprintf(stderr, "%s: 1: %s: not found\n", program_name, argv[0]);
 		free(argv);
