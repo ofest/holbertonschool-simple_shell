@@ -10,12 +10,15 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-/* Custom files */
-#include "handle_builtins.c"
-#include "arg_counter.c"
-#include "arg_filler.c"
-#include "path_checker.c"
-#include "execute_command.c"
-#include "_strdup.c"
+/* External variable */
+extern char **environ;
+
+/* Function prototypes */
+char *_strdup(char *str);
+int arg_counter(char *cmd);
+char **arg_filler(int count, char *cmd);
+char *path_checker(char *cmd);
+int execute_command(char **argv);
+int handle_builtins(char **argv, char **env);
 
 #endif

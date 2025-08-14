@@ -16,6 +16,7 @@ int main(int argc, char **argv, char **envp)
 	size_t size = 0;
 	ssize_t read_chars;
 	int interactive = isatty(STDIN_FILENO);
+	char *program_name = argv[0];
 
 	(void)argc;
 
@@ -45,7 +46,7 @@ int main(int argc, char **argv, char **envp)
 		else if (handle_builtins(argv, envp) == 2)
 			return (0);
 		if (execute_command(argv) == -1)
-			fprintf(stderr, "hsh: command not found: %s\n", argv[0]);
+			fprintf(stderr, "%s: 1: %s: not found\n", program_name, argv[0]);
 		free(argv);
 	}
 	free(cmd);

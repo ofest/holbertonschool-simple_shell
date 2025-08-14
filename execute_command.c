@@ -31,9 +31,9 @@ int execute_command(char **argv)
 	else if (pid == 0)
 	{
 		/* Child process */
-		if (execv(full_path, argv) == -1)
+		if (execve(full_path, argv, environ) == -1)
 		{
-			perror("execv");
+			perror("execve");
 			free(full_path);
 			exit(EXIT_FAILURE);
 		}
