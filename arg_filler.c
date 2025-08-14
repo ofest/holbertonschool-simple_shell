@@ -15,7 +15,6 @@ char **arg_filler(int count, char *cmd)
 
 	if (!cmd || count <= 0)
 		return (NULL);
-
 	/* Allocate space */
 	argv = malloc(sizeof(char *) * (count + 1));
 	if (!argv)
@@ -31,7 +30,6 @@ char **arg_filler(int count, char *cmd)
 		free(argv);
 		return (NULL);
 	}
-
 	/* Fill argv & argc */
 	token = strtok(tmp_cmd, " \n");
 	for (; token && argc < count; argc++)
