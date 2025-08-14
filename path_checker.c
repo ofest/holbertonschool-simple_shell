@@ -9,7 +9,7 @@
 
 char *path_checker(char *cmd)
 {
-	char *path, *path_copy, *dir, *full_path;
+	char *path, *path_copy, *dir, *full_p;
 	struct stat st;
 
 	if (!cmd)
@@ -29,21 +29,21 @@ char *path_checker(char *cmd)
 	while (dir)
 	{
 		/* Allocate space for full path */
-		full_path = malloc(strlen(dir) + strlen(cmd) + 2);
-		if (!full_path)
+		full_p = malloc(strlen(dir) + strlen(cmd) + 2);
+		if (!full_p)
 		{
 			free(path_copy);
 			return (NULL);
 		}
 		/* Build full path */
-		sprintf(full_path, "%s/%s", dir, cmd);
+		sprintf(full_p, "%s/%s", dir, cmd);
 		/* Check if file exists and is executable */
-		if (stat(full_path, &st) == 0 && S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
+		if (stat(full_p, &st) == 0 && S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
 		{
 			free(path_copy);
-			return (full_path);
+			return (full_p);
 		}
-		free(full_path);
+		free(full_p);
 		dir = strtok(NULL, ":");
 	}
 	free(path_copy);

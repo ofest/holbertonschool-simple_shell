@@ -12,6 +12,8 @@ int handle_builtins(char **argv, char **env)
 {
 	int i;
 
+	(void)env; /* Use environ instead */
+
 	if (!argv || !argv[0])
 		return (0);
 
@@ -21,9 +23,9 @@ int handle_builtins(char **argv, char **env)
 	}
 	else if (strcmp(argv[0], "env") == 0)
 	{
-		for (i = 0; env[i]; i++)
+		for (i = 0; environ[i]; i++)
 		{
-			printf("%s\n", env[i]);
+			printf("%s\n", environ[i]);
 		}
 		return (1);
 	}

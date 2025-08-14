@@ -16,9 +16,10 @@ int main(int argc, char **argv, char **envp)
 	size_t size = 0;
 	ssize_t read_chars;
 	int interactive = isatty(STDIN_FILENO);
-	char *program_name = argv[0];
+	char *program_name = "hsh";
 
 	(void)argc;
+	(void)argv;
 
 	while (1)
 	{
