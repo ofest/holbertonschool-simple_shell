@@ -23,9 +23,9 @@ It was developed as out fourth group project at Holberton School with the goal t
    cd holbertonschool-simple_shell
    ```
 
-2. **Compile the source files:**
+2. **Compile the source files with makefile:**
    ```sh
-   gcc -Wall -Werror -Wextra -pedantic main.c -o hsh
+   make
    ```
    This will generate an executable named `hsh`.
 3. **Create an alias (optional)**
@@ -40,6 +40,10 @@ It was developed as out fourth group project at Holberton School with the goal t
     ```shell
     alias hsh=/<path to the directory>./hsh
     ```
+4. **Clean the object files from the directory:**
+   ```shell
+   make clean
+   ```
 
 ## 💡 Usage
 1. **Interactive mode**
