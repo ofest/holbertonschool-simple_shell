@@ -44,7 +44,7 @@ char *path_checker(char *cmd)
 			free(path_copy);
 			return (NULL);
 		}
-		sprintf(full_p, "%s/%s", dir, cmd);
+		snprintf(full_p, strlen(dir) + strlen(cmd) + 2, "%s/%s", dir, cmd);
 		if (stat(full_p, &st) == 0 &&
 				S_ISREG(st.st_mode) &&
 				(st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)))
