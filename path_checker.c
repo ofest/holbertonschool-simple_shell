@@ -9,36 +9,45 @@
 
 char *path_checker(char *cmd)
 {
-	char *path, *path_copy, *dir, *full_p;
+	int i;
+	char *path = NULL, *path_copy, *dir, *full_p;
 	struct stat st;
 
 	if (!cmd)
 		return (NULL);
-	/* If 'cmd' is a valid existing path to an executable, return it */
-	if (stat(cmd, &st) == 0 && S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
+	if (stat(cmd, &st) == 0 &&
+		S_ISREG(st.st_mode) &&
+		(st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)))
 		return (_strdup(cmd));
-	/* Get PATH environment variable */
-	path = getenv("PATH");
+	if (environ)
+	{
+		for (i = 0; environ[i]; i++)
+		{
+			if (strncmp(environ[i], "PATH=", 5) == 0)
+			{
+				path = environ[i] + 5;
+				break;
+			}
+		}
+	}
 	if (!path)
 		return (NULL);
 	path_copy = _strdup(path);
 	if (!path_copy)
 		return (NULL);
-	/* Search in each directory of PATH */
 	dir = strtok(path_copy, ":");
 	while (dir)
 	{
-		/* Allocate space for full path */
 		full_p = malloc(strlen(dir) + strlen(cmd) + 2);
 		if (!full_p)
 		{
 			free(path_copy);
 			return (NULL);
 		}
-		/* Build full path */
 		sprintf(full_p, "%s/%s", dir, cmd);
-		/* Check if file exists and is executable */
-		if (stat(full_p, &st) == 0 && S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
+		if (stat(full_p, &st) == 0 &&
+				S_ISREG(st.st_mode) &&
+				(st.st_mode & (S_IXUSR | S_IXGRP | S_IXOTH)))
 		{
 			free(path_copy);
 			return (full_p);

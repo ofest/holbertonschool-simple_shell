@@ -3,7 +3,7 @@
 /**
  * execute_command - Execute a command.
  * @argv: Argument values.
- * @envp: environment values.
+ * @envp: Environment values.
  *
  * Return: 0 on success, -1 on failure.
  */
@@ -32,12 +32,10 @@ int execute_command(char **argv, char **envp)
 	else if (pid == 0)
 	{
 		/* Child process */
-		if (execve(full_path, argv, envp) == -1)
-		{
-			perror("execve");
-			free(full_path);
-			exit(EXIT_FAILURE);
-		}
+		execve(full_path, argv, envp);
+		perror("execve");
+		free(full_path);
+		exit(EXIT_FAILURE);
 	}
 	else
 	{
