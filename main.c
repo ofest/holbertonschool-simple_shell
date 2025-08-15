@@ -12,28 +12,19 @@
 int main(int argc, char **argv, char **envp)
 {
 	int count, builtin_result;
-	char *cmd = NULL, *prompt = ("($) ");
+	char *cmd = NULL, char *prompt = ("($) "), char *program_name = "hsh";
 	size_t size = 0;
-	ssize_t read_chars;
-	int interactive = isatty(STDIN_FILENO);
-	char *program_name = "hsh";
-
-	(void)argc;
-	(void)argv;
-
+	ssize_t input;
+	(void)argc, (void)argv;
 	while (1)
 	{
-		if (interactive)
+		if (isatty(STDIN_FILENO))
 			printf("%s", prompt);
-		read_chars = getline(&cmd, &size, stdin);
-		if (read_chars == -1)
-		{
-			printf("\n");
-			free(cmd);
-			return (0);
-		}
-		if (cmd[read_chars - 1] == '\n')
-			cmd[read_chars - 1] = '\0';
+		input = getline(&cmd, &size, stdin);
+		if (input == -1 || !cmd || size < 2)
+			break;
+		if (cmd[input - 1] == '\n')
+			cmd[input - 1] = '\0';
 		if (strlen(cmd) == 0)
 			continue;
 		count = arg_counter(cmd);
@@ -54,7 +45,7 @@ int main(int argc, char **argv, char **envp)
 			free(cmd);
 			return (0);
 		}
-		if (execute_command(argv) == -1)
+		if (execute_command(argv, envp) == -1)
 			fprintf(stderr, "%s: 1: %s: not found\n", program_name, argv[0]);
 		free(argv);
 	}
