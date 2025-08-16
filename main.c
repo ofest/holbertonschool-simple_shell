@@ -8,7 +8,8 @@
 
 int main (void)
 {
-	int argc = 0, count, i;
+
+	int argc = 0, count;
 	char *tmp_cmd, **argv;
 	/* Command line */
 	char *cmd = NULL, *token;
@@ -17,6 +18,9 @@ int main (void)
 	/* Char read */
 	ssize_t num_char;
 	char *prompt = "($) ";
+	pid_t pid;
+	int status;
+
 
 	while (1)
 	{
@@ -64,24 +68,33 @@ int main (void)
 		}
 		argv[argc] = NULL;
 
-		/* Check if tty */
-		if (isatty(STDIN_FILENO))
+		pid = fork();
+		if (pid == -1)
 		{
-			printf("Mode interactif\nargc = %i\n", argc); /* Debug */
-			for (i = 0; i < argc; i++) /* Debug */
-			{ /* Debug */
-				printf("argv[%d] = %s\n", i, argv[i]); /* Debug */
-			} /* Debug */
-			
-			free(argv);
+			perror("fork");
+			return (0);
+		}
+		else if (pid == 0)
+		{
+			/* Processus enfant */
+			printf("Before execve\n");
+			if (execvp(argv[0], argv) == -1)
+			{
+				perror("Error");
+				exit(EXIT_FAILURE);
+			}
+			printf("After execv\n");
 		}
 		else
 		{
-            execvp(argv[0], argv);
-            perror("Error executing command"); 
-            return (-1);
+			/* Processus parent */
+			waitpid(pid, &status, 0);
 		}
+
+		free(argv);
+
 	}
 	free(cmd);
 	return (0);
 }
+
