@@ -58,18 +58,23 @@ It was developed as out fourth group project at Holberton School with the goal t
 ## 📁 Project Structure
 ```txt
 .
-├── AUTHORS
-├── LICENSE
-├── README.md
-├── arg_counter.c
-├── arg_filler.c
-├── execute_command.c
-├── handle_builtins.c
-├── main.c
-├── main.h
-├── man_1_simple_shell
-└── path_checker.c
+├── AUTHORS              # Project contributors
+├── LICENSE              # License (GNU GPL v3.0)
+├── README.md            # Documentation
+├── arg_counter.c        # Counts number of arguments in a command
+├── arg_filler.c         # Splits command into tokens (fills argv array)
+├── execute_command.c    # Handles fork/execvp execution of commands
+├── handle_builtins.c    # Checks and executes built-in commands (exit, env, etc.)
+├── main.c               # Main loop of the shell (interactive + non-interactive)
+├── main.h               # Header file with prototypes, structs, and macros
+├── man_1_simple_shell   # Manual page for the shell
+└── path_checker.c       # Handles PATH resolution (search command in PATH dirs)
 ```
+
+## Limitations:
+
+-Does not implement advanced features like piping (|), redirection (>, <), or job control (fg, bg).
+-No command history.
 
 ## 👥 Authors
 - [Daniel R.](https://github.com/ofest)
