@@ -19,6 +19,7 @@ void exit_shell(char **args);
 void print_env(char **args);
 char *find_path(char *command);
 int file_exists(char *filepath);
+char *exec_full_path(char *command, char *dir);
 
 /* Global variables */
 extern char **environ;

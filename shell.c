@@ -71,11 +71,9 @@ int execute_command(char **args)
 
 	if (args[0] == NULL)
 		return (1);
-
 	/* Check for built-in commands */
 	if (check_builtin(args))
 		return (1);
-
 	/* Find command in PATH */
 	command_path = find_path(args[0]);
 	if (command_path == NULL)
@@ -85,7 +83,6 @@ int execute_command(char **args)
 		write(STDERR_FILENO, ": not found\n", 12);
 		return (1);
 	}
-
 	/* Fork process */
 	pid = fork();
 	if (pid == 0)
@@ -104,13 +101,8 @@ int execute_command(char **args)
 		return (1);
 	}
 	else
-	{
-		/* Parent process */
 		wait(&status);
-	}
-
 	if (command_path != args[0])
 		free(command_path);
-
 	return (1);
 }

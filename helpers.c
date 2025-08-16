@@ -40,22 +40,12 @@ char *find_path(char *command)
 	dir = strtok(path_copy, ":");
 	while (dir != NULL)
 	{
-		full_path = malloc(strlen(dir) + strlen(command) + 2);
-		if (full_path == NULL)
-		{
-			free(path_copy);
-			return (NULL);
-		}
-
-		sprintf(full_path, "%s/%s", dir, command);
-
-		if (file_exists(full_path))
+		full_path = exec_full_path(command, dir);
+		if (full_path != NULL)
 		{
 			free(path_copy);
 			return (full_path);
 		}
-
-		free(full_path);
 		dir = strtok(NULL, ":");
 	}
 
@@ -79,4 +69,27 @@ int file_exists(char *filepath)
 	}
 
 	return (0);
+}
+
+/**
+ * exec_full_path - Builds full path and checks if executable exists
+ * @command: The command to find
+ * @dir: Directory to check
+ * Return: Full path if executable exists, NULL otherwise
+ */
+char *exec_full_path(char *command, char *dir)
+{
+	char *full_path;
+
+	full_path = malloc(strlen(dir) + strlen(command) + 2);
+	if (full_path == NULL)
+		return (NULL);
+
+	sprintf(full_path, "%s/%s", dir, command);
+
+	if (file_exists(full_path))
+		return (full_path);
+
+	free(full_path);
+	return (NULL);
 }
