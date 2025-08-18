@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
-  * get_path - Get envirnment path
-  * Return: environment path
-  */
+ * get_path - Get environment path
+ * Return: environment path
+ */
 char *get_path(void)
 {
 	char *path_env, *path_copy;
@@ -77,7 +77,7 @@ int file_exists(char *filepath)
 
 	if (stat(filepath, &st) == 0)
 	{
-		if (S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
+		if (S_ISREG(st.st_mode) && access(filepath, X_OK) == 0)
 			return (1);
 	}
 
@@ -93,12 +93,15 @@ int file_exists(char *filepath)
 char *exec_full_path(char *command, char *dir)
 {
 	char *full_path;
+	size_t needed_size;
 
-	full_path = malloc(strlen(dir) + strlen(command) + 2);
+
+	needed_size = strlen(dir) + 1 + strlen(command) + 1;
+	full_path = malloc(needed_size);
 	if (full_path == NULL)
 		return (NULL);
 
-	sprintf(full_path, "%s/%s", dir, command);
+	snprintf(full_path, needed_size, "%s/%s", dir, command);
 
 	if (file_exists(full_path))
 		return (full_path);
