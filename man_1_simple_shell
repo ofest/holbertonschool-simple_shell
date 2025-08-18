@@ -1,68 +1,81 @@
 .\" Manpage for hsh (Holberton Simple Shell)
-.TH HSH 1 "Aout 2025" "1.0" "User Commands"
+.TH HSH 1 "August 2025" "hsh 1.0" "User Commands"
 
-
-.SH \m[cyan]NAME\m[white]
+.SH \m[cyan]NAME\m[]
 hsh \- simple UNIX command interpreter
 
+.SH \m[cyan]SYNOPSIS\m[]
+.B \m[yellow]hsh\m[]
 
-.SH \m[cyan]SYNOPSIS\m[white]
-.B \m[yellow]hsh\m[white]
-.RI [ command ]
-.br
-.B \m[yellow]hsh\m[white]
-execute a command from the system.
-
-
-.SH \m[cyan]DESCRIPTION\m[white]
+.SH \m[cyan]DESCRIPTION\m[]
 The
-.B \m[yellow]hsh\m[white]
-program is a simple command-line interpreter.
-It mimics basic functionality of a UNIX shell.
+.B \m[yellow]hsh\m[]
+program is a minimal command-line interpreter written in C for educational purposes.
+It reads commands from standard input, tokenizes them by whitespace, resolves the
+executable via the
+.B PATH
+environment variable or by absolute/relative paths, and executes commands in child processes.
+It supports both interactive and non-interactive modes and implements a small set of built-ins.
+
 .PP
-It reads commands from the user or a file, parses them, and executes them by forking processes.
-The shell supports:
-.IP \[bu] 2
-Executing commands found in the system PATH
-.IP \[bu] 2
-Handling command arguments
-.IP \[bu] 2
-Simple built-in commands like
-.B \m[yellow]exit\m[white]
-and
-.B \m[yellow]env\m[white]
-.IP \[bu] 2
-Interactive mode and non-interactive mode
+In interactive mode, the prompt displayed is
+.B "($) "
+. In non-interactive mode, commands can be piped in or read from redirected input.
 
+.SH \m[cyan]MODES\m[]
+.IP \[bu] 2
+.B Interactive:
+start with
+.B ./hsh
+and type commands at the prompt.
+.IP \[bu] 2
+.B Non-interactive:
+provide commands via a pipe or input redirection.
 
-.SH \m[cyan]OPTIONS\m[white]
-.TP
-.I input_file
-A text file containing commands to be executed, one per line.
-
-
-.SH \m[cyan]BUILTINS\m[white]
+.SH \m[cyan]BUILTINS\m[]
 The following built-in commands are supported:
 .TP
-.B \m[yellow]exit\m[white]
+.B \m[yellow]exit\m[]
 Exit the shell.
 .TP
-.B \m[yellow]env\m[white]
-Print the current environment variables.
+.B \m[yellow]env\m[]
+Print the current environment variables, one per line.
 
+.SH \m[cyan]ENVIRONMENT\m[]
+The following environment variables affect the behavior of
+.B \m[yellow]hsh\m[]:
+.TP
+.B PATH
+Specifies the directories to search for executables.
+.TP
+.B HOME
+Default starting directory (not modified by this shell).
+.TP
+.B USER
+Current logged-in user.
 
-.SH \m[cyan]EXIT STATUS\m[white]
+.SH \m[cyan]EXIT STATUS\m[]
 The
-.B \m[yellow]hsh\m[white]
-command returns:
+.B \m[yellow]hsh\m[]
+process exits with:
 .IP 0
-If the last executed command was successful.
+On normal termination.
 .IP 1
 If an internal shell error occurred.
 
+.SH \m[cyan]ERRORS\m[]
+Unknown commands result in a message like:
+.EX
+./hsh: 1: <command>: not found
+.EE
+System call failures (e.g.,
+.B fork
+or
+.B execve
+) are reported via standard error.
 
-.SH \m[cyan]EXAMPLES\m[white]
-.B \m[yellow]Run in interactive mode:\m[white]
+.SH \m[cyan]EXAMPLES\m[]
+.B \m[yellow]Interactive mode:\m[]
 .PP
 .EX
 $ ./hsh
@@ -70,50 +83,31 @@ $ ./hsh
 ($) exit
 .EE
 .PP
-.B \m[yellow]Run in non-interactive mode:\m[white]
+.B \m[yellow]Non-interactive mode:\m[]
 .PP
 .EX
 $ echo "ls -l" | ./hsh
 .EE
 
+.SH \m[cyan]NOTES\m[]
+To view this manual with colors enabled:
+.EX
+$ groff -k -Tascii -man man_1_simple_shell | less -R
+.EE
+Color output may depend on your terminal and pager configuration.
 
-.SH \m[cyan]FILES\m[white]
-.TP
-.I AUTHORS
-List of individuals who contributed to the project.
-.TP
-.I /bin/*
-System binaries available to execute.
-.TP
-.I /usr/bin/*
-Additional system binaries available to execute.
-
-
-.SH \m[cyan]ENVIRONMENT\m[white]
-The following environment variables affect the behavior of
-.B \m[yellow]hsh\m[white]:
-.TP
-.B PATH
-Specifies the directories to search for commands.
-.TP
-.B HOME
-Specifies the default starting directory for the shell.
-.TP
-.B USER
-Current logged-in user.
-
-
-.SH \m[cyan]AUTHOR\m[white]
+.SH \m[cyan]AUTHOR\m[]
 See the
 .I AUTHORS
 file in the project root directory for the list of contributors.
 
-
-.SH \m[cyan]SEE ALSO\m[white]
+.SH \m[cyan]SEE ALSO\m[]
+.BR sh (1),
 .BR bash (1),
+.BR dash (1),
+.BR execve (2)
 
-
-.SH \m[cyan]COPYLEFT\m[white]
+.SH \m[cyan]LICENSE\m[]
 This program is free software; you can redistribute it and/or modify it under the terms of
 the GNU General Public License (GPL) version 3, as published by the Free Software Foundation.
 .PP
@@ -122,4 +116,4 @@ without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 See the GNU General Public License for more details.
 .PP
 You should have received a copy of the GNU General Public License along with this program;
-if not, see\m[purple]<http://www.gnu.org/licenses/>\m[white].
+if not, see \m[purple]<http://www.gnu.org/licenses/>\m[].
