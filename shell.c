@@ -80,16 +80,17 @@ int fork_process(char *command_path, char **args)
 		return (1);
 	}
 	else
-		wait(&status);
+		waitpid(pid, &status, 0);
 	return (0);
 }
 
 /**
- * execute_command - Executes a command
- * @args: Array of command arguments
- * Return: 1 to continue, 0 to exit
+ * execute_command - Execute a command or a built-in
+ * @args: Null-terminated array of arguments
+ * @cmd_index: Sequential command number for error reporting
+ * Return: 1 to continue, 0 to exit, -1 to exit shell, >1 exit status
  */
-int execute_command(char **args)
+int execute_command(char **args, int cmd_index)
 {
 	char *command_path;
 	int builtin_status;
@@ -106,9 +107,7 @@ int execute_command(char **args)
 	command_path = find_path(args[0]);
 	if (command_path == NULL)
 	{
-		write(STDERR_FILENO, "./hsh: 1: ", 10);
-		write(STDERR_FILENO, args[0], strlen(args[0]));
-		write(STDERR_FILENO, ": not found\n", 12);
+		dprintf(STDERR_FILENO, "./hsh: %d: %s: not found\n", cmd_index, args[0]);
 		return (1);
 	}
 
