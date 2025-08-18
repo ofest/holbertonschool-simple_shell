@@ -4,7 +4,7 @@
  * check_builtin - Checks if command is a built-in
  * @args: Array of command arguments
  * Return: 1 if built-in executed and continue, 0 if not a built-in,
- *         -1 if shell should exit
+ *         -1 if shell should exit, or exit status code from args[1]
  */
 int check_builtin(char **args)
 {
@@ -13,6 +13,8 @@ int check_builtin(char **args)
 
 	if (strcmp(args[0], "exit") == 0)
 	{
+		if (args[1])
+			return (atoi(args[1]));
 		return (-1);
 	}
 

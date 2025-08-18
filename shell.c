@@ -77,7 +77,7 @@ int execute_command(char **args)
 	builtin_status = check_builtin(args);
 	if (builtin_status != 0)
 	{
-		if (builtin_status < 0)
+		if (builtin_status < 0 || builtin_status > 1)
 			return (0);
 		return (1);
 	}
