@@ -22,7 +22,7 @@ SOURCES = $(wildcard *.c)
 OBJECTS = $(SOURCES:.c=.o)
 
 # Phony targets (targets that don't represent files)
-.PHONY: all clean
+.PHONY: all clean fclean re help
 
 # Default target: build the executable
 all: $(TARGET)
