@@ -1,16 +1,12 @@
-#include "main.h"
+#include "shell.h"
 
 /**
- * main - Main loop.
- * @argc: Argument count.
- * @argv: Argument values.
- * @envp: Environment pointer.
- *
- * Return: 0 on success, 1 on error
+ * main - Entry point of the shell.
+ * Return: 0 on success, 1 on error.
  */
-
-int main(int argc, char **argv, char **envp)
+int main(void)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 	int argc = 0, count;
@@ -29,46 +25,44 @@ int main(int argc, char **argv, char **envp)
 
 
 	while (1)
+=======
+	char *line;
+	char **args;
+	int status = 1;
+
+	/* Set up signal handling */
+	signal(SIGINT, SIG_IGN);
+
+	while (status)
+>>>>>>> origin/main
 	{
+		/* Display prompt in interactive mode */
 		if (isatty(STDIN_FILENO))
-			printf("%s", prompt);
-		input = getline(&cmd, &size, stdin);
-		if (input == -1 || !cmd || size < 2)
+			display_prompt();
+		/* Read command line */
+		line = read_line();
+		if (line == NULL)
 		{
 			if (isatty(STDIN_FILENO))
-				putchar('\n');
+				write(STDOUT_FILENO, "\n", 1);
 			break;
 		}
-		if (cmd && input > 0 && cmd[input - 1] == '\n')
-			cmd[input - 1] = '\0';
-		if (!cmd || cmd[0] == '\0')
-			continue;
-		line_count++;
-		count = arg_counter(cmd);
-		if (count <= 0)
-			continue;
-		args = arg_filler(count, cmd);
-		if (!args)
-			continue;
-		builtin_result = handle_builtins(args, envp);
-		if (builtin_result == 1)
+		/* Parse command line */
+		args = parse_line(line);
+		if (args == NULL)
 		{
-			free_argv(args);
+			free(line);
 			continue;
 		}
-		else if (builtin_result == 2)
-		{
-			free_argv(args);
-			free(cmd);
-			return (0);
-		}
-		if (execute_command(args, envp) == -1)
-			fprintf(stderr, "%s: %u: %s: not found\n", name, line_count, args[0]);
+		/* Execute command */
+		status = execute_command(args);
+		/* Clean up */
+		free(line);
 		free(args);
 	}
-	free(cmd);
 	return (0);
 }
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -89,4 +83,6 @@ void free_argv(char **argv)
 
 	free(argv);
 }
+>>>>>>> origin/main
+=======
 >>>>>>> origin/main
