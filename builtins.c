@@ -20,7 +20,7 @@ int check_builtin(char **args)
 
 	if (strcmp(args[0], "env") == 0)
 	{
-		print_env(args);
+		print_env();
 		return (1);
 	}
 
@@ -39,13 +39,10 @@ void exit_shell(char **args)
 
 /**
  * print_env - Built-in env command
- * @args: Array of command arguments
  */
-void print_env(char **args)
+void print_env(void)
 {
 	int i;
-
-	(void)args;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{

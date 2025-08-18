@@ -1,22 +1,13 @@
 #include "shell.h"
 
 /**
- * find_path - Finds the full path of a command
- * @command: The command to find
- * Return: Full path to command, or NULL if not found
- */
-char *find_path(char *command)
+  * get_path - Get envirnment path
+  * Return: environment path
+  */
+char *get_path(void)
 {
-	char *path_env, *path_copy, *dir, *full_path;
+	char *path_env, *path_copy;
 	int i;
-
-	/* If command contains '/', check if it exists */
-	if (strchr(command, '/') != NULL)
-	{
-		if (file_exists(command))
-			return (command);
-		return (NULL);
-	}
 
 	/* Get PATH environment variable */
 	path_env = NULL;
@@ -35,6 +26,28 @@ char *find_path(char *command)
 	path_copy = strdup(path_env);
 	if (path_copy == NULL)
 		return (NULL);
+
+	return (path_copy);
+}
+
+/**
+ * find_path - Finds the full path of a command
+ * @command: The command to find
+ * Return: Full path to command, or NULL if not found
+ */
+char *find_path(char *command)
+{
+	char *path_copy, *dir, *full_path;
+
+	/* If command contains '/', check if it exists */
+	if (strchr(command, '/') != NULL)
+	{
+		if (file_exists(command))
+			return (command);
+		return (NULL);
+	}
+
+	path_copy = get_path();
 
 	/* Search each directory in PATH */
 	dir = strtok(path_copy, ":");

@@ -17,7 +17,7 @@ int main(void)
 	{
 		/* Display prompt in interactive mode */
 		if (isatty(STDIN_FILENO))
-			display_prompt();
+			write(STDOUT_FILENO, "($) ", 4);
 
 		/* Read command line */
 		line = read_line();
