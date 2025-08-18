@@ -100,11 +100,7 @@ int execute_command(char **args)
 	/* Check for built-in commands */
 	builtin_status = check_builtin(args);
 	if (builtin_status != 0)
-	{
-		if (builtin_status < 0 || builtin_status > 1)
-			return (0);
-		return (1);
-	}
+		return (builtin_status);
 
 	/* Find command in PATH */
 	command_path = find_path(args[0]);

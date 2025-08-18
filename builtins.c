@@ -17,24 +17,13 @@ int check_builtin(char **args)
 			return (atoi(args[1]));
 		return (-1);
 	}
-
-	if (strcmp(args[0], "env") == 0)
+	else if (strcmp(args[0], "env") == 0)
 	{
 		print_env();
 		return (1);
 	}
 
 	return (0);
-}
-
-/**
- * exit_shell - Built-in exit command
- * @args: Array of command arguments
- */
-void exit_shell(char **args)
-{
-	(void)args;
-	exit(EXIT_SUCCESS);
 }
 
 /**
