@@ -3,7 +3,8 @@
 /**
  * check_builtin - Checks if command is a built-in
  * @args: Array of command arguments
- * Return: 1 if built-in executed, 0 if not a built-in
+ * Return: 1 if built-in executed and continue, 0 if not a built-in,
+ *         -1 if shell should exit
  */
 int check_builtin(char **args)
 {
@@ -12,8 +13,8 @@ int check_builtin(char **args)
 
 	if (strcmp(args[0], "exit") == 0)
 	{
-		exit_shell(args);
-		return (1);
+		/* Signal to exit main loop */
+		return (-1);
 	}
 
 	if (strcmp(args[0], "env") == 0)
