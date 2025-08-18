@@ -6,26 +6,6 @@
  */
 int main(void)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-	int argc = 0, count;
-	char *tmp_cmd, **argv;
-	/* Command line */
-	char *cmd = NULL, *token;
-	/* Buffer size */
-=======
-	int count, builtin_result;
-	char *cmd = NULL, *prompt = ("($) "), *name, **args = NULL;
->>>>>>> origin/main
-	size_t size = 0;
-	ssize_t input;
-	unsigned int line_count = 0;
-	name = (argc > 0 && argv && argv[0] ? argv[0] : "hsh");
-
-
-	while (1)
-=======
 	char *line;
 	char **args;
 	int status = 1;
@@ -34,7 +14,7 @@ int main(void)
 	signal(SIGINT, SIG_IGN);
 
 	while (status)
->>>>>>> origin/main
+
 	{
 		/* Display prompt in interactive mode */
 		if (isatty(STDIN_FILENO))
@@ -62,10 +42,7 @@ int main(void)
 	}
 	return (0);
 }
-<<<<<<< HEAD
 
-<<<<<<< HEAD
-=======
 /**
   * free_argv - Free a NULL-terminated array of strings
   * @argv: Argument vector to free.
@@ -83,6 +60,3 @@ void free_argv(char **argv)
 
 	free(argv);
 }
->>>>>>> origin/main
-=======
->>>>>>> origin/main
