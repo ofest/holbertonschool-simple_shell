@@ -12,7 +12,7 @@
 /* Function prototypes */
 char *read_line(void);
 char **parse_line(char *line);
-int execute_command(char **args);
+int execute_command(char **args, int cmd_index);
 int check_builtin(char **args);
 void print_env(void);
 char *find_path(char *command);

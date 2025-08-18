@@ -19,15 +19,13 @@ int main(void)
 {
 	char *line, **args;
 	int status = 1;
+	int cmd_index = 0;
 
 	signal(SIGINT, SIG_IGN);
-
 	while (status)
 	{
-		/* Display prompt in interactive mode */
 		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, "($) ", 4);
-		/* Read command line */
 		line = read_line();
 		if (line == NULL)
 		{
@@ -43,7 +41,9 @@ int main(void)
 			continue;
 		}
 		/* Execute command */
-		status = execute_command(args);
+		if (args[0] != NULL)
+			cmd_index++;
+		status = execute_command(args, cmd_index);
 		if (status == 0 || status == -1)
 		{
 			clean_up(line, args);
