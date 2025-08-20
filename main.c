@@ -1,25 +1,32 @@
 #include "shell.h"
 
 /**
+  * clean_up - Free line & args
+  * @line: Command line
+  * @args: Arguments from cmd line
+  */
+void clean_up(char *line, char **args)
+{
+	free(line);
+	free(args);
+}
+
+/**
  * main - Entry point of the shell.
  * Return: 0 on success, 1 on error.
  */
 int main(void)
 {
-	char *line;
-	char **args;
+	char *line, **args;
 	int status = 1;
+	int cmd_index = 0;
 
-	/* Set up signal handling */
 	signal(SIGINT, SIG_IGN);
-
 	while (status)
 
 	{
-		/* Display prompt in interactive mode */
 		if (isatty(STDIN_FILENO))
-			display_prompt();
-		/* Read command line */
+			write(STDOUT_FILENO, "($) ", 4);
 		line = read_line();
 		if (line == NULL)
 		{
@@ -35,10 +42,20 @@ int main(void)
 			continue;
 		}
 		/* Execute command */
-		status = execute_command(args);
-		/* Clean up */
-		free(line);
-		free(args);
+		if (args[0] != NULL)
+			cmd_index++;
+		status = execute_command(args, cmd_index);
+		if (status == 0 || status == -1)
+		{
+			clean_up(line, args);
+			break;
+		}
+		else if (status > 1)
+		{
+			clean_up(line, args);
+			exit(status);
+		}
+		clean_up(line, args);
 	}
 	return (0);
 }

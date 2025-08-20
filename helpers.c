@@ -1,22 +1,13 @@
 #include "shell.h"
 
 /**
- * find_path - Finds the full path of a command
- * @command: The command to find
- * Return: Full path to command, or NULL if not found
+ * get_path - Get environment path
+ * Return: environment path
  */
-char *find_path(char *command)
+char *get_path(void)
 {
-	char *path_env, *path_copy, *dir, *full_path;
+	char *path_env, *path_copy;
 	int i;
-
-	/* If command contains '/', check if it exists */
-	if (strchr(command, '/') != NULL)
-	{
-		if (file_exists(command))
-			return (command);
-		return (NULL);
-	}
 
 	/* Get PATH environment variable */
 	path_env = NULL;
@@ -35,6 +26,28 @@ char *find_path(char *command)
 	path_copy = strdup(path_env);
 	if (path_copy == NULL)
 		return (NULL);
+
+	return (path_copy);
+}
+
+/**
+ * find_path - Finds the full path of a command
+ * @command: The command to find
+ * Return: Full path to command, or NULL if not found
+ */
+char *find_path(char *command)
+{
+	char *path_copy, *dir, *full_path;
+
+	/* If command contains '/', check if it exists */
+	if (strchr(command, '/') != NULL)
+	{
+		if (file_exists(command))
+			return (command);
+		return (NULL);
+	}
+
+	path_copy = get_path();
 
 	/* Search each directory in PATH */
 	dir = strtok(path_copy, ":");
@@ -64,7 +77,7 @@ int file_exists(char *filepath)
 
 	if (stat(filepath, &st) == 0)
 	{
-		if (S_ISREG(st.st_mode) && (st.st_mode & S_IXUSR))
+		if (S_ISREG(st.st_mode) && access(filepath, X_OK) == 0)
 			return (1);
 	}
 
@@ -80,12 +93,15 @@ int file_exists(char *filepath)
 char *exec_full_path(char *command, char *dir)
 {
 	char *full_path;
+	size_t needed_size;
 
-	full_path = malloc(strlen(dir) + strlen(command) + 2);
+
+	needed_size = strlen(dir) + 1 + strlen(command) + 1;
+	full_path = malloc(needed_size);
 	if (full_path == NULL)
 		return (NULL);
 
-	sprintf(full_path, "%s/%s", dir, command);
+	snprintf(full_path, needed_size, "%s/%s", dir, command);
 
 	if (file_exists(full_path))
 		return (full_path);

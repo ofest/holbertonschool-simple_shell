@@ -92,24 +92,45 @@ man -l man_1_simple_shell
 ## 📁 Project Structure
 ```txt
 .
-<<<<<<< HEAD
-├── AUTHORS              # Project contributors
-├── LICENSE              # License (GNU GPL v3.0)
-├── README.md            # Documentation
-├── arg_counter.c        # Counts number of arguments in a command
-├── arg_filler.c         # Splits command into tokens (fills argv array)
-├── execute_command.c    # Handles fork/execvp execution of commands
-├── handle_builtins.c    # Checks and executes built-in commands (exit, env, etc.)
-├── main.c               # Main loop of the shell (interactive + non-interactive)
-├── main.h               # Header file with prototypes, structs, and macros
-├── man_1_simple_shell   # Manual page for the shell
-└── path_checker.c       # Handles PATH resolution (search command in PATH dirs)
+├── AUTHORS
+├── LICENSE
+├── Makefile
+├── README.md
+├── builtins.c
+├── helpers.c
+├── main.c
+├── man_1_simple_shell
+├── shell.c
+├── shell.h
+└── .gitignore
 ```
+## 📂 File Descriptions
 
-## Limitations:
+- main.c → Entry point; runs the main shell loop (read, parse, execute).
 
--Does not implement advanced features like piping (|), redirection (>, <), or job control (fg, bg).
--No command history.
+- shell.c → Core logic for executing commands, forking, and handling PATH resolution.
+
+- builtins.c → Implements built-in commands (exit, env).
+
+- helpers.c → Utility functions (string parsing, memory helpers, PATH resolution).
+
+- shell.h → Header file with function prototypes, includes, and global variables.
+
+- man_1_simple_shell → Manual page for the shell.
+
+- Makefile → Automates compilation of the project.
+
+- AUTHORS → Project contributors.
+
+- LICENSE → License information (GPLv3).
+
+## ⚠️ Limitations
+
+- No support for advanced shell features (;, &&, ||, pipes |, redirections < > >>, etc.).
+
+- Limited error handling (basic messages, no detailed diagnostics).
+
+- Only two built-ins implemented: exit and env.
 
 ## 👥 Authors
 - [Daniel R.](https://github.com/ofest)

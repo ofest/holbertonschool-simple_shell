@@ -3,23 +3,23 @@
 /**
  * check_builtin - Checks if command is a built-in
  * @args: Array of command arguments
- * Return: 1 if built-in executed, 0 if not a built-in
- * -1 if shell should exit
+ * Return: 1 if built-in executed and continue, 0 if not a built-in,
+ *         -1 if shell should exit, or exit status code from args[1]
  */
 int check_builtin(char **args)
 {
-	if (args[0] == NULL)
+	if (args == NULL || args[0] == NULL)
 		return (0);
 
 	if (strcmp(args[0], "exit") == 0)
 	{
-		exit_shell(args);
+		if (args[1])
+			return (atoi(args[1]));
 		return (-1);
 	}
-
-	if (strcmp(args[0], "env") == 0)
+	else if (strcmp(args[0], "env") == 0)
 	{
-		print_env(args);
+		print_env();
 		return (1);
 	}
 
@@ -27,24 +27,11 @@ int check_builtin(char **args)
 }
 
 /**
- * exit_shell - Built-in exit command
- * @args: Array of command arguments
- */
-void exit_shell(char **args)
-{
-	(void)args;
-	exit(EXIT_SUCCESS);
-}
-
-/**
  * print_env - Built-in env command
- * @args: Array of command arguments
  */
-void print_env(char **args)
+void print_env(void)
 {
 	int i;
-
-	(void)args;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{

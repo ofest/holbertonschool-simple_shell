@@ -1,14 +1,6 @@
 #include "shell.h"
 
 /**
- * display_prompt - Displays the shell prompt
- */
-void display_prompt(void)
-{
-	write(STDOUT_FILENO, "($) ", 4);
-}
-
-/**
  * read_line - Reads a line from stdin
  * Return: Pointer to the line, or NULL on EOF
  */
@@ -59,30 +51,17 @@ char **parse_line(char *line)
 }
 
 /**
- * execute_command - Executes a command
+ * fork_process - Create a child process to run an external command.
+ * @command_path: Path to the executable to run (absolute or relative).
  * @args: Array of command arguments
- * Return: 1 to continue, 0 to exit
+ *
+ * Return: 0 on success, 1 if it fails.
  */
-int execute_command(char **args)
+int fork_process(char *command_path, char **args)
 {
 	pid_t pid;
 	int status;
-	char *command_path;
 
-	if (args[0] == NULL)
-		return (1);
-	/* Check for built-in commands */
-	if (check_builtin(args))
-		return (1);
-	/* Find command in PATH */
-	command_path = find_path(args[0]);
-	if (command_path == NULL)
-	{
-		write(STDERR_FILENO, "./hsh: 1: ", 10);
-		write(STDERR_FILENO, args[0], strlen(args[0]));
-		write(STDERR_FILENO, ": not found\n", 12);
-		return (1);
-	}
 	/* Fork process */
 	pid = fork();
 	if (pid == 0)
@@ -101,7 +80,39 @@ int execute_command(char **args)
 		return (1);
 	}
 	else
-		wait(&status);
+		waitpid(pid, &status, 0);
+	return (0);
+}
+
+/**
+ * execute_command - Execute a command or a built-in
+ * @args: Null-terminated array of arguments
+ * @cmd_index: Sequential command number for error reporting
+ * Return: 1 to continue, 0 to exit, -1 to exit shell, >1 exit status
+ */
+int execute_command(char **args, int cmd_index)
+{
+	char *command_path;
+	int builtin_status;
+
+	if (args[0] == NULL)
+		return (1);
+
+	/* Check for built-in commands */
+	builtin_status = check_builtin(args);
+	if (builtin_status != 0)
+		return (builtin_status);
+
+	/* Find command in PATH */
+	command_path = find_path(args[0]);
+	if (command_path == NULL)
+	{
+		dprintf(STDERR_FILENO, "./hsh: %d: %s: not found\n", cmd_index, args[0]);
+		return (1);
+	}
+
+	fork_process(command_path, args);
+
 	if (command_path != args[0])
 		free(command_path);
 	return (1);
