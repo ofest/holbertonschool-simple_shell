@@ -1,6 +1,14 @@
 #include "shell.h"
 
 /**
+ * display_prompt - Displays the shell prompt
+ */
+void display_prompt(void)
+{
+	write(STDOUT_FILENO, "($) ", 4);
+}
+
+/**
  * read_line - Reads a line from stdin
  * Return: Pointer to the line, or NULL on EOF
  */
@@ -49,7 +57,6 @@ char **parse_line(char *line)
 
 	return (args);
 }
-
 /**
  * fork_process - Create a child process to run an external command.
  * @command_path: Path to the executable to run (absolute or relative).
@@ -80,15 +87,15 @@ int fork_process(char *command_path, char **args)
 		return (1);
 	}
 	else
-		waitpid(pid, &status, 0);
+		wait(&status);
 	return (0);
 }
 
+
 /**
- * execute_command - Execute a command or a built-in
- * @args: Null-terminated array of arguments
- * @cmd_index: Sequential command number for error reporting
- * Return: 1 to continue, 0 to exit, -1 to exit shell, >1 exit status
+ * execute_command - Executes a command
+ * @args: Array of command arguments
+ * Return: 1 to continue, 0 to exit
  */
 int execute_command(char **args, int cmd_index)
 {
