@@ -104,6 +104,33 @@ man -l man_1_simple_shell
 ├── shell.h
 └── .gitignore
 ```
+## 📂 File Descriptions
+
+- main.c → Entry point; runs the main shell loop (read, parse, execute).
+
+- shell.c → Core logic for executing commands, forking, and handling PATH resolution.
+
+- builtins.c → Implements built-in commands (exit, env).
+
+- helpers.c → Utility functions (string parsing, memory helpers, PATH resolution).
+
+- shell.h → Header file with function prototypes, includes, and global variables.
+
+- man_1_simple_shell → Manual page for the shell.
+
+- Makefile → Automates compilation of the project.
+
+- AUTHORS → Project contributors.
+
+- LICENSE → License information (GPLv3).
+
+## ⚠️ Limitations
+
+- No support for advanced shell features (;, &&, ||, pipes |, redirections < > >>, etc.).
+
+- Limited error handling (basic messages, no detailed diagnostics).
+
+- Only two built-ins implemented: exit and env.
 
 ## 👥 Authors
 - [Daniel R.](https://github.com/ofest)
